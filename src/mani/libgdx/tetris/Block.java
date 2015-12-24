@@ -19,4 +19,9 @@ public class Block {
 		pos[X] = x;
 		pos[Y] = y;
 	}
+	
+	Block(int x, int y, Color _color) {
+		this(x, y);
+		this.color = _color;
+	}
 }

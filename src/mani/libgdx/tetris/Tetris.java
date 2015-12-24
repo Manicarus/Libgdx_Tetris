@@ -4,6 +4,7 @@ public class Tetris {
 	JFrame mainFrame;
 	JPanel board;
 	Block[][] fixedBlock;
+	Wall wall;
 	Tetrominoe curTetro;
 	boolean GameOver;
 	Timer timer;
@@ -52,12 +53,12 @@ public class Tetris {
 		}
 		
 	};
-	
+	/*
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Tetris tetris = new Tetris();
 	}
-	
+	*/
 	void DropTetro() {
 		while(!checkCollision(new Tetrominoe(curTetro, 0, 1))) {
 			curTetro.mvDown();
@@ -228,7 +229,39 @@ public class Tetris {
 			}
 		}
 	}
-
+	
+	void Render() {
+		// Draw wall
+		Block block;
+		for(int i = 0; i < Tetris.HEIGHT + 1; i++) {
+			for(int j = 0; j < Tetris.WIDTH + 2; j++) {
+				if(fixedBlock[i][j] != null) {
+					gBlock = (Graphics2D) g;
+					block = fixedBlock[i][j];
+					
+					if(block.color != null) { // fixedBlock from Tetrominoe
+						gBlock.setColor(block.color);
+						gBlock.fillRect(OFFSET + block.pos[Block.X] * Block.edgeLen, OFFSET 
+								+ block.pos[Block.Y] * Block.edgeLen, Block.edgeLen, Block.edgeLen);
+						//gBlock.fillRoundRect(OFFSET + block.pos[Block.X] * Block.edgeLen, OFFSET 
+						//		+ block.pos[Block.Y] * Block.edgeLen, Block.edgeLen, Block.edgeLen, 5, 5);
+					} else { // fixedBlock from Wall
+						gBlock.setColor(Color.BLACK);
+						gBlock.drawRect(OFFSET + block.pos[Block.X] * Block.edgeLen, OFFSET 
+								+ block.pos[Block.Y] * Block.edgeLen, Block.edgeLen, Block.edgeLen);
+						//gBlock.fillRect(OFFSET + block.pos[Block.X] * Block.edgeLen, OFFSET 
+						//		+ block.pos[Block.Y] * Block.edgeLen, Block.edgeLen, Block.edgeLen);
+						//gBlock.drawRoundRect(OFFSET + block.pos[Block.X] * Block.edgeLen, OFFSET 
+						//		+ block.pos[Block.Y] * Block.edgeLen, Block.edgeLen, Block.edgeLen, 5, 5);
+						//gBlock.fillRoundRect(OFFSET + block.pos[Block.X] * Block.edgeLen, OFFSET 
+						//		+ block.pos[Block.Y] * Block.edgeLen, Block.edgeLen, Block.edgeLen, 5, 5);
+					}				
+				}
+			}
+		}
+	}
+	
+	/*
 	@Override
 	void Render() {
 		// TODO Auto-generated method stub
@@ -286,6 +319,7 @@ public class Tetris {
 		//mainFrame.revalidate(); // These two functions are not working well
 		// I choose to remove the old Panel and add a new one
 	}
+	*/
 
 	@Override
 	void Release() {
